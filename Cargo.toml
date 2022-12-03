@@ -24,6 +24,7 @@ serde = "1.0.117"
 serde_yaml = "0.8.14"
 wasm-bindgen = "0.2.82"
 wasm-bindgen-futures = "0.4.32"
+wasm-timer = "0.2.5"
 web-sys = { version = "0.3.50", features = [
     "Blob",
     "Document",
@@ -33,6 +34,8 @@ web-sys = { version = "0.3.50", features = [
     "UrlSearchParams",
     "Window",
 ] }
+futures-lite = "1.12.0"
 
 [dev-dependencies]
 assert_approx_eq = "1.1.0"
+pretty_assertions = "*"
