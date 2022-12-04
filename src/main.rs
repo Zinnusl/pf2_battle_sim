@@ -334,40 +334,37 @@ fn model() -> Model {
 
 fn update(_app: &App, m: &mut Model, _update: Update) {
 
-    let fut = async {
-        let a = m.agents[0].clone();
-        let b = m.agents[1].clone();
+    let a = m.agents[0].clone();
+    let b = m.agents[1].clone();
 
-        for _ in 0..=2 {
-            if !a.borrow().in_range(&b.borrow()) {
-                a.borrow_mut().move_towards(&b.borrow());
-            } else {
-                a.borrow_mut().attack(&mut b.borrow_mut());
-            }
-
-            // sleep for 2 seconds
-            async_std::task::sleep(std::time::Duration::from_secs(2)).await;
+    for _ in 0..=2 {
+        if !a.borrow().in_range(&b.borrow()) {
+            a.borrow_mut().move_towards(&b.borrow());
+        } else {
+            a.borrow_mut().attack(&mut b.borrow_mut());
         }
 
-        check_dead(&mut m.agents);
+        // sleep for 2 seconds
+        // async_std::task::sleep(std::time::Duration::from_secs(2)).await;
+    }
 
-        for _ in 0..=2 {
-            if !b.borrow().in_range(&a.borrow()) {
-                b.borrow_mut().move_towards(&a.borrow());
-            } else {
-                b.borrow_mut().attack(&mut a.borrow_mut());
-            }
+    check_dead(&mut m.agents);
 
-            // sleep for 2 seconds
-            async_std::task::sleep(std::time::Duration::from_secs(2)).await;
+    for _ in 0..=2 {
+        if !b.borrow().in_range(&a.borrow()) {
+            b.borrow_mut().move_towards(&a.borrow());
+        } else {
+            b.borrow_mut().attack(&mut a.borrow_mut());
         }
 
-        check_dead(&mut m.agents);
+        // sleep for 2 seconds
+        // async_std::task::sleep(std::time::Duration::from_secs(2)).await;
+    }
 
-        a.borrow_mut().new_round();
-        b.borrow_mut().new_round();
-    };
-    while fut.poll(:q).is_pending() {}
+    check_dead(&mut m.agents);
+
+    a.borrow_mut().new_round();
+    b.borrow_mut().new_round();
 }
 
 fn check_dead(agents: &mut Vec<Arc<RefCell<Agent>>>) {
