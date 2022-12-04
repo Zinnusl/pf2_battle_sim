@@ -21,11 +21,9 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: jetli/trunk-action@v0.2.0
-        with:
-          version: 'latest'
       - run: rustup toolchain install nightly
       - run: rustup default nightly
+      - run: cargo install trunk
       - run: trunk build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
