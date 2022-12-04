@@ -23,6 +23,7 @@ jobs:
           toolchain: stable
       - run: rustup toolchain install nightly
       - run: rustup default nightly
+      - run: rustup target add wasm32-unknown-unknown
       - run: cargo install trunk
       - run: trunk build
       - name: Deploy
